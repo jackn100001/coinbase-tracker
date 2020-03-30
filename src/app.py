@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 from tracker import Tracker
 import json
 

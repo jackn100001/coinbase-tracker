@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 from coinbase.wallet.client import Client
 from datetime import datetime
 from dotenv import load_dotenv
