@@ -12,9 +12,13 @@ def main():
 	client = initialize_client()
 	account_id = os.getenv("BTC_ACCOUNT_ID")
 	tracker = Tracker(client, account_id)
-	profit_loss = tracker.calculate_profit_loss()
-
-	print("Current profit/loss: %.4f%%" % profit_loss)
+	show_tracker_info(tracker)
+	
+def show_tracker_info(tracker):
+	tracker.show_spent_worth()
+	print()
+	tracker.show_profit_loss_percentage()
+	tracker.show_profit_loss_difference()
 
 def initialize_client():
 	api_key = os.getenv("API_KEY")
