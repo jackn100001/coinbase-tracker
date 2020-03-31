@@ -1,4 +1,5 @@
 # Coinbase Tracker
+## NOTE: This is only setup to track a BTC wallet for now
 ### Prerequesites:
 * [Coinbase account](https://www.coinbase.com/signup)
 * [Coinbase API key](https://www.coinbase.com/settings/api) (only once you've created an account)

@@ -1,34 +1,22 @@
 #! /usr/bin/python3
 
-from coinbase.wallet.client import Client
 from datetime import datetime
-from dotenv import load_dotenv
-import os
 
 class Tracker:
-	def __init__(self):
-		load_dotenv()
-		self.api_key = os.getenv("API_KEY")
-		self.api_secret = os.getenv("API_SECRET")
-		self.account_id = os.getenv("ACCOUNT_ID")
-		self.client = Client(self.api_key, self.api_secret)
-		self.accounts = self.client.get_accounts()
+	def __init__(self, client, account_id):
+		self.client = client
+		self.account_id = account_id
+		self.btc_wallet = client.get_account(account_id)
 
 	def calculate_profit_loss(self):
-		btc_wallet = self.get_btc_wallet()
 		price_now = float(self.client.get_spot_price(currency_pair="BTC-GBP")["amount"])
-		btc_owned = float(str(btc_wallet["balance"]).replace("BTC", ""))
+		btc_owned = float(str(self.btc_wallet["balance"]).replace("BTC", ""))
 		worth_now = price_now * btc_owned
 		buys = self.client.get_buys(self.account_id).data
 		money_spent = self.calculate_money_spent(buys)
 		profit_loss = float((-1 + (worth_now / money_spent)) * 100)
 
 		return profit_loss
-
-	def get_btc_wallet(self):
-		for wallet in self.accounts.data:
-			if wallet["currency"] == "BTC":
-				return wallet
 
 	def calculate_money_spent(self, buys):
 		money_spent = 0
